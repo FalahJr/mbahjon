@@ -24,12 +24,12 @@ include('header.php');
                             <span class="ml-2">Products</span>
                           </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                           <a class="nav-link" href="list_admin.php">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                             <span class="ml-2">Admin List</span>
                           </a>
-                        </li>
+                        </li> -->
                         
                       </ul>
                 </div>
@@ -41,25 +41,68 @@ include('header.php');
                         <li class="breadcrumb-item active" aria-current="page">Order</li>
                     </ol>
                 </nav>
-                <h1 class="h2">Welcome to Dashboard Admin Mbahjon</h1>
+                <h1 class="h2">History Order Mbahjon</h1>
+                <!-- <a href="addproduct.php" class="btn btn-sm btn-success mr-4"><i class="fas fa-plus"></i> Tambah Menu</a> -->
                 <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nama Pembeli</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Total Order</th>
+                        <!-- <th scope="col" colspan="">Action</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    include('../config.php');
+                    // jalankan query untuk menampilkan semua data diurutkan berdasarkan nim
+                    $query = "SELECT * FROM pembayaran INNER JOIN USER ON user.id_user = pembayaran.id_user ORDER BY id_pembayaran ASC";
+                    $result = mysqli_query($koneksi, $query);
+                    //mengecek apakah ada error ketika menjalankan query
+                    if(!$result){
+                        die ("Query Error: ".mysqli_errno($koneksi).
+                        " - ".mysqli_error($koneksi));
+                    }
+
+                    //buat perulangan untuk element tabel dari data mahasiswa
+                    $no = 1; //variabel untuk membuat nomor urut
+                    // hasil query akan disimpan dalam variabel $data dalam bentuk array
+                    // kemudian dicetak dengan perulangan while
+                    while($row = mysqli_fetch_assoc($result))
+                    {
+                    ?>
+                        <tr>
+                        <th scope="row"><?php echo $no; ?></th>
+                        <td><?php echo $row['email']?></td>
+                        <td><?php echo $row['tgl_pembayaran']?></td>
+                        <td>Rp. <?php echo $row['total_pembayaran']?></td>
+                        <td>
+                        
+                       
+                        </td>
+                        <!-- <td></td> -->
+                        </tr>
+                        <!-- <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td colspan="2">Larry the Bird</td>
+                        <td>@twitter</td>
+                        </tr> -->
+                        <?php
+                            $no++; //untuk nomor urut terus bertambah 1
+                        }
+                        ?>
+                    </tbody>
+                </table>
                 <footer class="pt-5 d-flex justify-content-between">
-                    <span>Copyright © 2021 <a href="https://themesberg.com">Kelompok 5</a></span>
+                    <span>Copyright © 2021 <a href=">Kelompok 5</a></span>
                 </footer>
             </main>
 <?php

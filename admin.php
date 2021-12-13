@@ -41,7 +41,7 @@
           <div class="d-grid gap-2">
             <button type="submit" class="btn btn-success">Login</button>
           </div>
-          <p class="para-2">Not have an account? <a href="Sign Up.php">Sign Up Here</a></p>
+          <p class="para-2">Not have an account? <a href="register.php">Sign Up Here</a></p>
         </form>
       
       </div>

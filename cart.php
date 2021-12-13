@@ -70,23 +70,25 @@
             <h1 class="h2">Your Cart</h1>
                 <!-- <a href="addproduct.php" class="btn btn-sm btn-success mr-4"><i class="fas fa-plus"></i> Tambah Menu</a> -->
                 <br>
+                <form action="checkout.php" method="post">
+                        <input type="hidden" name="id_user" value="<?php echo $_SESSION['id_login']; ?>">
                 <table class="table table-hover">
                     <thead>
                         <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Nama Menu</th>
+                        <th scope="col" class="w-25">Nama Menu</th>
                         <th scope="col">Gambar</th>
                         <th scope="col">Harga</th>
-                        <th scope="col">Qty</th>
-                        <th scope="col" colspan="">Action</th>
+                        <th scope="col" class="">Qty</th>
+                        <th scope="col">Jumlah</th>
+                        <th scope="col" colspan="2">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
                     <?php
                     include('config.php');
                     $id_user = $_GET['id_user'];
                     // jalankan query untuk menampilkan semua data diurutkan berdasarkan nim
-                    $query = "SELECT * FROM keranjang INNER JOIN MENU ON menu.id_menu = keranjang.id_menu WHERE id_user='1'";
+                    $query = "SELECT * FROM keranjang INNER JOIN MENU ON menu.id_menu = keranjang.id_menu WHERE id_user='$id_user'";
                     // dd('query');
                     $result = mysqli_query($koneksi, $query);
                     //mengecek apakah ada error ketika menjalankan query
@@ -97,42 +99,60 @@
 
                     //buat perulangan untuk element tabel dari data mahasiswa
                     $no = 1; //variabel untuk membuat nomor urut
+                    $jumlah = 0;
+                    $total = 0;
+
                     // hasil query akan disimpan dalam variabel $data dalam bentuk array
                     // kemudian dicetak dengan perulangan while
                     while($row = mysqli_fetch_assoc($result))
                     {
                     ?>
+                    <tbody>
+                    
+
                         <tr>
                         <th scope="row"><?php echo $no; ?></th>
                         <td><?php echo $row['deskripsi_menu']?></td>
                         <td class="w-25">
                         <img class="img-responsive w-50" src="Image/<?php echo $row['gambar_menu']?>" alt="">  
                         </td>
-                        <td><?php echo $row['harga']?></td>
-                        <td><?php echo $row['qty']?></td>
-                        <td>
-                       
-                        <a href="deletecart.php?id=<?php echo $row['id_keranjang'] ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</a>
-                        </td>
+                        <input type="hidden" name="id_menu" value="<?php echo $row['id_menu'] ?>">
+
+                            <td>
+                            <input class="form-control form-control-sm" name="harga" onchange="calculateAmount(this.value)" type="number" value="<?php echo $row['harga']?>" readonly>    
+                            </td>
+                            <td><input class="form-control form-control-sm" name="qty" onchange="calculateAmount(this.value)" type="number" value="<?php echo $row['qty']?>" readonly></td>
+                            <td><input class="form-control form-control-sm" id="tot_amount_<?php echo $row['id_menu'] ?>" type="text" readonly value="<?php echo $jumlah = $row['qty'] * $row['harga']; ?>"></td>
+                            <td>
+                            <input class="form-control form-control-sm" name="tot_amount" id="tot_amount_<?php echo $row['id_menu'] ?>" type="text" hidden value="<?php echo $total += $row['qty'] * $row['harga']; ?>">
+                            <a href="deletecart.php?id=<?php echo $row['id_keranjang'] ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                            <!-- <input type="submit" name="hitung" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Calculate -->
+                            
+                            </td>
                         <!-- <td></td> -->
                         </tr>
-                        <!-- <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                        </tr> -->
-                        <?php
+                        
+                
+                        
+                    </tbody>
+
+                    <?php
                             $no++; //untuk nomor urut terus bertambah 1
                         }
                         ?>
-                    </tbody>
+                        
                 </table>
+                <div class="row mt-4">
+                    <div class="col-10">
+                    <h3>Total : <?php echo $total  ?></h3>
+                    <input type="hidden" name="subtotal" value="<?php echo $total ?>">
+                    </div>
+                    <div class="col-2">
+                    <input type="submit" class="btn btn-md btn-success" name="submit" value="Checkout">
+                    </div>
+                </div>
+                </form>
+
                     </div>
                     </section>
     <!-- Footer -->

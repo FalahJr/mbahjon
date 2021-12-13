@@ -22,6 +22,6 @@ if($cek > 0) {
 	// $_SESSION['id_login'] = $data['id'];
 	header("location:admin/dashboard.php");
 } else {
-	header("location:login.php?pesan=gagal login data tidak ditemukan.");
+	header("location:admin.php?pesan=gagal login data tidak ditemukan.");
 }
 ?>

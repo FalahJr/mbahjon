@@ -19,33 +19,33 @@
 
 <body>
   <div class="container-fluid">
-    <div class="card signup-form">
+    <div class="card login-form">
       <div class="card-text">
-        <form>
+        <form action="register_user.php" method="POST">
           <h1 class="card-title text-center">SIGN UP</h1>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">First Name</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
           </div>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Last Name</label>
             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-          </div>
+          </div> -->
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+            <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
           </div>
           <div class="mb-3">
             <label for="password-field" class="form-label">Password</label>
-            <input id="password-field" type="password" class="form-control" />
+            <input id="password-field" name="password" type="password" class="form-control" />
           </div>
           <div class="mb-3">
-            <label for="password-field" class="form-label">Confirm Password</label>
-            <input id="password-field" type="password" class="form-control" />
+            <label for="number" class="form-label">No Telp</label>
+            <input id="number" name="telp" type="number" class="form-control" />
           </div>
 
           <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-success">Login</button>
+            <button type="submit" class="btn btn-success">Sign Up</button>
           </div>
           <p class="para-2">Already have an account? <a href="Login.php">Login Here</a></p>
         </form>

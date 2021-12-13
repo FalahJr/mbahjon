@@ -134,7 +134,7 @@
                             <div class="text-center">
                                 <input name="id_menu" value="<?php echo $row['id_menu']; ?>"  hidden />
                                 <input name="id_user" value="<?php echo $_SESSION['id_login']; ?>"  hidden />
-                                <input name="qty" value="<?php echo $_SESSION['id_login']; ?>"  type="number" class="w-50 mb-3" />
+                                <input name="qty" value="0"  type="number" class="w-50 mb-3" />
                                 <br>
                                 <!-- <a class="btn btn-outline-dark mt-auto" href="#">Buy</a> -->
                                 <input type="submit" value="Buy" name="submit" class="btn btn-success btn-outlne-dark mt-auto">
