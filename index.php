@@ -32,8 +32,8 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link" href="#">Home</a>
-                    <a class="nav-link" href="#">About Us</a>
-                    <a class="nav-link" href="#">Menu</a>
+                    <a class="nav-link" href="#menu">Menu</a>
+                    <a class="nav-link" href="#about">About Us</a>
                     <?php
                         // $_SESSION['status'] = "";
 
@@ -52,9 +52,9 @@
 
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">Cart</a></li>
+                            <li><a class="dropdown-item" href="cart.php?id_user=<?php echo $_SESSION['id_login']; ?>"><i class="fas fa-shopping-cart"></i> Cart</a></li>
                             <!-- <li><a class="dropdown-item" href="#">Another action</a></li> -->
-                            <li><a class="dropdown-item" href="logout.php">Log Out</a></li>
+                            <li><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
                         </ul>
                     </div>
                     <?php
@@ -74,7 +74,7 @@
                 <h2>Ngopi enak gak harus mahal<br>karna <span> MBAH JHON</span> adalah<br>tepat untuk mencari inspirasi</h2>
             </div>
             <div class="imgBox">
-                <img src="Image/img1.png" class="kopi1">
+                <img src="Image/img1.png" class="kopi1 w-100">
             </div>
         </div>
         <ul class="kopi">
@@ -88,174 +88,71 @@
     <!-- Akhir Home -->
 
     <!-- Menu -->
-    <section class="pt-5">
+    <section class="pt-5" id="menu">
 
-        <div class="container px-4 px-lg-5 mt-5">
+        <div class="container px-4 px-lg-5 mt-5" >
 
             <div class="col text-center pb-4">
                 <h1 style="color: #3c623d;"><b>MENU</b></h1>
             </div>
 
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <?php
+                    include('config.php');
+                    // jalankan query untuk menampilkan semua data diurutkan berdasarkan nim
+                    $query = "SELECT * FROM menu ORDER BY id_menu ASC";
+                    $result = mysqli_query($koneksi, $query);
+                    //mengecek apakah ada error ketika menjalankan query
+                    if(!$result){
+                        die ("Query Error: ".mysqli_errno($koneksi).
+                        " - ".mysqli_error($koneksi));
+                    }
+
+                    //buat perulangan untuk element tabel dari data mahasiswa
+                    // $no = 1; //variabel untuk membuat nomor urut
+                    // hasil query akan disimpan dalam variabel $data dalam bentuk array
+                    // kemudian dicetak dengan perulangan while
+                    while($row = mysqli_fetch_assoc($result))
+                    {
+            ?>
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- Product image-->
-                        <img class="card-img-top" src="Image/Menu 1.png" alt="..." />
+                        <img class="card-img-top" src="Image/<?php echo $row['gambar_menu']?>" alt="..." />
                         <!-- Product details-->
-                        <div class="card-body p-4">
+                        <div class="card-body p-2">
                             <div class="text-center">
                                 <!-- Product name-->
-                                <h5 class="fw-bolder">Fancy Product</h5>
+                                <h5 class="fw-bolder"><?php echo $row['deskripsi_menu'] ?></h5>
                                 <!-- Product price-->
-                                Rp. 10.000
+                                Rp. <?php echo $row['harga'] ?>
                             </div>
                         </div>
                         <!-- Product actions-->
+                        <form action="addtocart.php" method="post">
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buy</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="Image/Menu 2.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Special Item</h5>
-                                <!-- Product price-->
-                                Rp. 10.000
+                                <input name="id_menu" value="<?php echo $row['id_menu']; ?>"  hidden />
+                                <input name="id_user" value="<?php echo $_SESSION['id_login']; ?>"  hidden />
+                                <input name="qty" value="<?php echo $_SESSION['id_login']; ?>"  type="number" class="w-50 mb-3" />
+                                <br>
+                                <!-- <a class="btn btn-outline-dark mt-auto" href="#">Buy</a> -->
+                                <input type="submit" value="Buy" name="submit" class="btn btn-success btn-outlne-dark mt-auto">
                             </div>
                         </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buy</a></div>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="Image/Menu 3.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Sale Item</h5>
-                                <!-- Product price-->
-                                Rp. 10.000
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buy</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="Image/Menu 4.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Popular Item</h5>
-                                <!-- Product price-->
-                                Rp. 10.000
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buy</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="Image/Menu 5.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Sale Item</h5>
-                                <!-- Product price-->
-                                Rp. 10.000
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buy</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="Image/Menu 6.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Fancy Product</h5>
-                                <!-- Product price-->
-                                Rp. 10.000
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buy</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="Image/Menu 7.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Special Item</h5>
-                                <!-- Product price-->
-                                Rp. 10.000
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buy</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="Image/Menu 8.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Popular Item</h5>
-                                <!-- Product price-->
-                                Rp. 10.000
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Buy</a></div>
-                        </div>
-                    </div>
-                </div>
+               <?php
+                    }
+               ?>
             </div>
         </div>
     </section>
     <!-- Akhir Menu -->
 
     <!-- About Us -->
-    <div class="container">
+    <div class="container" id="about">
         <div class="row pb-2 mt-1 mb-3">
             <div class="col text-center">
                 <h1 style="color: #3c623d;"><b>ABOUT US</b></h1>

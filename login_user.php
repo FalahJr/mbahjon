@@ -19,7 +19,7 @@ if($cek > 0) {
 	$_SESSION['email'] = $email;
 	// $_SESSION['nama'] = $data['nama'];
 	$_SESSION['status'] = "sudah_login";
-	// $_SESSION['id_login'] = $data['id'];
+	$_SESSION['id_login'] = $data['id_user'];
 	header("location:index.php");
 } else {
 	header("location:login.php?pesan=gagal login data tidak ditemukan.");
